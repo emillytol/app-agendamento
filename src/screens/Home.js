@@ -13,13 +13,13 @@ export default function Home(){
                 <TarefaItem
                     nome="Tarefa 1"
                     status="a cumprir"
-                    data="24/04/2004"
+                    data="24/04/2006"
                     categoria="reunião"
                 />
                 <TarefaItem
                     nome="Tarefa 2"
                     status="concluído"
-                    data="35/13/2088"
+                    data="03/01/2006"
                     categoria="estudo"
                 />
             </ScrollView>
