@@ -1,14 +1,20 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function TarefaItem() {
+export default function TarefaItem(props) {
+
+    let statusColor = 'orange';
+
+    if (props.status == 'concluído') {
+        statusColor = 'green';
+    }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titulo}> Tarefa 1</Text>
-            <Text style={styles.data}>03/01/2025</Text>
-            <Text style={styles.categoria}>Categoria - estudo</Text>
-            <View style={styles.status}>
-                <Text style={styles.textoStatus}> A cumprir</Text>
+            <Text style={styles.titulo}>{props.nome}</Text>
+            <Text style={styles.data}>{props.data}</Text>
+            <Text style={styles.categoria}>Categoria - {props.categoria}</Text>
+            <View style={{ ...styles.status, backgroundColor: statusColor }}>
+                <Text style={styles.textoStatus}>{props.status}</Text>
             </View>
         </View>
     )
@@ -42,6 +48,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
+        left: 150
     },
     textoStatus: {
         color: 'white'
