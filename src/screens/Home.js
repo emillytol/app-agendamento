@@ -28,18 +28,18 @@ export default function Home() {
             </View>
 
             <ScrollView style={styles.body}>
-                <TarefaItem
-                    nome="Tarefa 1"
-                    status="a cumprir"
-                    data="24/04/2006"
-                    categoria="reunião"
-                />
-                <TarefaItem
-                    nome="Tarefa 2"
-                    status="concluído"
-                    data="03/01/2006"
-                    categoria="estudo"
-                />
+                {
+                    tasks && tasks.map((item) => {
+                        return (
+                            <TarefaItem
+                            nome={item.nome}
+                            status={item.status}
+                            data={item.data}
+                            categoria={item.categoria}
+                            />
+                        )
+                    })
+                }
             </ScrollView>
 
             <TouchableOpacity
