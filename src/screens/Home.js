@@ -1,10 +1,24 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import TarefaItem from '../components/TarefaItem';
+import { getData} from '../storage/async-storage';
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
 
     const navigation = useNavigation();
+
+
+
+    const [ tasks, setTask ] = useState(null)
+
+    // Executa ao carregar a página
+    useEffect(async () => {
+        const data = await getData();
+        setTask(data);
+    }, []);
+
+    console.log(tasks)
 
     return (
         <View style={styles.container}>
