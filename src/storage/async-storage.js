@@ -1,9 +1,12 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const key = 'tasks';
 
 const getData = async () => {
-    return await AsyncStorage.getItem(key);
+    // JSON.parse transforma textos em objetos
+    let data = JSON.parse(await AsyncStorage.getItem(key));
+
+    // Se não houverem dados, preencher e salvar um array vazio
     if (data == null) {
         data = []
         setData(data)
@@ -12,10 +15,18 @@ const getData = async () => {
 }
 
 const setData = async (value) => {
-    await AsyncStorage.setItem(key, JSON.stringify (value));
+    // JSON.stringify transforma objetos em textos
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+}
+
+const addData = async (task) =>{
+    const data = await getData()
+    data.push(task)
+    await setData(data)
 }
 
 export {
     getData,
-    setData
+    setData,
+    addData
 }
