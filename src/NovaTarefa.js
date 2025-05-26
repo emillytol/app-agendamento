@@ -2,43 +2,48 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+
+import MaskInput from 'react-native-mask-input';
 import { addData } from './storage/async-storage';
+
 
 export default function NovaTarefa() {
 
-    const navigation = useNavigation();
+    const navigation = useNavigation ();
 
-    const [nome, setNome] = useState('')
-    const [categotia, setCategotia] = useState('prova')
+    const [ nome, setNome] = useState('')
+    const [categotia, setCategotia] = useState('')
     const [descricao, setDescricao] = useState('')
-    const [data, setData] = useState('')
+    const [data,setData] = useState('')
 
-    const handleSave = async () => {
+    const handleSave = async () =>{
         const tarefa = {
             nome: nome,
             categoria: categotia,
             data: data,
-            descricao: descricao
+            descricao: descricao,
+            status: 'A fazer'
+
         };
-        if (validateFields()) {
-            await addData(tarefa)
-            alert("Nova tarefa cadastrada!")
-            navigation.navigate('Home')
-        }
-    };
-        if (nome == '') {
+
+        if (nome == ''){
             alert("Campo nome não preenchido")
         }
-
-        else if(descricao == '') {
+        else if (descricao == ''){
             alert("Campo descrição não preenchido")
         }
-        else {
-            await addData(tarefa)
-            alert("Nova tarefa cadastrada!")
-            navigation.navigate('Home')
+
+        else if (data == ''){
+            alert("Campo data não preenchido")
+        }
+
+        else{
+         await addData(tarefa)
+        alert("Nova tarefa cadastrada!")
+        navigation.navigate('Home')
         }
     }
+
 
     return (
         <View>
@@ -67,24 +72,22 @@ export default function NovaTarefa() {
                     value={descricao} onChangeText={texto => setDescricao(texto)}
                 />
 
-                <TextInput
+                <MaskInput
                     style={styles.textDate}
                     placeholder='dd/mm/yyyy'
                     value={data} onChangeText={texto => setData(texto)}
+                    mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
                 />
-
                 <View style={styles.containerBotao}>
-                    <TouchableOpacity style={styles.botao} onPress={() => navigation.goBack()}>
-                        <Text style={styles.botaoTexto}>Cancel</Text>
+                    <TouchableOpacity style={styles.botao} onPress={()=> navigation.goBack()}>
+                    <Text style={styles.botaoTexto} >Cancel</Text>
                     </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.botao} onPress={() => {
-                        handleSave()
+                    <TouchableOpacity style={styles.botao}  onPress={()=>{
+                      handleSave ()
                     }}>
-                        <Text style={styles.botaoTexto}>OK</Text>
+                    <Text style={styles.botaoTexto} >Ok</Text>
                     </TouchableOpacity>
-                </View>
-
+                 </View>
             </View>
         </View>
     )
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     body: {
-        padding: 15,
+        padding: 15
     },
     texto: {
         marginBottom: 5
@@ -135,12 +138,13 @@ const styles = StyleSheet.create({
     },
     containerBotao: {
         flexDirection: 'row',
-        justifyContent: 'end'
+        justifyContent:'end'
     },
     botao: {
         padding: 15
     },
     botaoTexto: {
-        color: 'indigo'
+        color:'indigo'
+
     }
-});
+})
