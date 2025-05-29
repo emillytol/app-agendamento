@@ -19,14 +19,54 @@ const setData = async (value) => {
     await AsyncStorage.setItem(key, JSON.stringify(value));
 }
 
-const addData = async (task) =>{
+const addData = async (task) => {
     const data = await getData()
     data.push(task)
     await setData(data)
 }
 
+
+const removeData = async (task) => {
+    const tasks = await getData();
+
+    //Para cada item do array "tasks" ele cria uma variável "_task"
+    for (let _task of tasks) {
+        //Se o id da "_task" for igual ao id da minha "tasks" (passada no parametro)
+        if (_task.id == task.id) {
+            //Salva o índece da "_task" na constante "index"
+            const index = tasks.indexOf(_task)
+            //Se a tarefa existir
+            if (index !== -1) {
+                // Remove a tarefa pelo índice encontrado
+                tasks.splice(index, 1);
+            }
+            break
+        }
+    }
+    await setData(tasks)
+}
+
+const updateData = async (task) => {
+    const tasks = await getData();
+
+
+    for (let _task of tasks) {
+        if (_task.id == task.id) {
+            const index = tasks.indexOf(_task)
+            if (index !== -1) {
+                tasks[index] = task
+            }
+            break
+        }
+    }
+    await setData(tasks)
+}
+
+
 export {
     getData,
     setData,
-    addData
+    addData,
+    removeData,
+    updateData
 }

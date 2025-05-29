@@ -40,6 +40,8 @@ export default function Home() {
                                 status={item.status}
                                 data={item.data}
                                 categoria={item.categoria}
+                                task={item}
+                                setIsLoaded={setIsLoaded}
                             />
                         )
                     })
